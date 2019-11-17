@@ -60,4 +60,15 @@
         <!-- 内存中的最大值 -->
         <property name="maxInMemorySize" value="4096"/>
     </bean>
+
+    <!--拦截器-->
+    <!--<mvc:interceptors>-->
+        <!--<mvc:interceptor>-->
+            <!--&lt;!&ndash; 拦截所有请求 &ndash;&gt;-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="com.ctgu.filter.LoginInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+
 </beans>

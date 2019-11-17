@@ -30,7 +30,6 @@ public class UserController {
     @Resource
     private StudentService studentService;
 
-
     /**
      * 判断用户名是否存在
      */

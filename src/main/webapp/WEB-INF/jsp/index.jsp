@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,9 +12,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_eolqem241z66flxr.css" media="all" />
-    <link rel="stylesheet" href="/css/main.css" media="all" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_eolqem241z66flxr.css" media="all"/>
+    <link rel="stylesheet" href="/css/main.css" media="all"/>
 </head>
 <body class="main_body">
 <div class="layui-layout layui-layout-admin">
@@ -26,7 +25,26 @@
             <!-- 天气信息 -->
             <div class="weather" pc>
                 <div id="tp-weather-widget"></div>
-                <script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+                <script>(function (T, h, i, n, k, P, a, g, e) {
+                    g = function () {
+                        P = h.createElement(i);
+                        a = h.getElementsByTagName(i)[0];
+                        P.src = k;
+                        P.charset = "utf-8";
+                        P.async = 1;
+                        a.parentNode.insertBefore(P, a)
+                    };
+                    T["ThinkPageWeatherWidgetObject"] = n;
+                    T[n] || (T[n] = function () {
+                        (T[n].q = T[n].q || []).push(arguments)
+                    });
+                    T[n].l = +new Date();
+                    if (T.attachEvent) {
+                        T.attachEvent("onload", g)
+                    } else {
+                        T.addEventListener("load", g, false)
+                    }
+                }(window, document, "script", "tpwidget", "//widget.seniverse.com/widget/chameleon.js"))</script>
                 <script>tpwidget("init", {
                     "flavor": "slim",
                     "location": "zhengzhou",
@@ -46,7 +64,8 @@
             <!-- 顶部右侧菜单 -->
             <ul class="layui-nav top_menu">
                 <li class="layui-nav-item" mobile>
-                    <a href="javascript:;" data-url="/user/changPwdPage"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
+                    <a href="javascript:;" data-url="/user/changPwdPage"><i class="iconfont icon-shezhi1"
+                                                                            data-icon="icon-shezhi1"></i><cite>设置</cite></a>
                 </li>
 
                 <li class="layui-nav-item" mobile>
@@ -61,8 +80,12 @@
                         <cite>${user.username}</cite>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-url="/user/userInfo"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-                        <dd><a href="javascript:;" data-url="/user/changPwdPage"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
+                        <dd><a href="javascript:;" data-url="/user/userInfo"><i class="iconfont icon-zhanghu"
+                                                                                data-icon="icon-zhanghu"></i><cite>个人资料</cite></a>
+                        </dd>
+                        <dd><a href="javascript:;" data-url="/user/changPwdPage"><i class="iconfont icon-shezhi1"
+                                                                                    data-icon="icon-shezhi1"></i><cite>修改密码</cite></a>
+                        </dd>
                         <dd><a href="/logout"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
                     </dl>
                 </li>
@@ -72,13 +95,13 @@
     <!-- 左侧导航 -->
     <div class="layui-side">
         <div class="user-photo">
-            <a class="img" title="我的头像" ><img src="/images/face.jpg"></a>
+            <a class="img" title="我的头像"><img src="/images/face.jpg"></a>
             <p>你好！<span class="userName">${user.username}</span>, 欢迎登录</p>
         </div>
         <div class="navBar layui-side-scroll"></div>
     </div>
 
-    <input type="hidden" value="${student.sid}" id = "sid">
+    <input type="hidden" value="${student.sid}" id="sid">
 
     <!-- 右侧内容 -->
     <div class="layui-body layui-form">
@@ -119,8 +142,9 @@
 <script>
     $(function () {
         var sid = $("#sid").val();
-        if(sid == null || sid == "")
+        if (sid == null || sid == "")
             alert("请完善个人信息")
+            // window.location.href = "/userInfo"
     })
 </script>
 </body>

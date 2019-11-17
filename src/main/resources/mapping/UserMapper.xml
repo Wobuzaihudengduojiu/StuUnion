@@ -9,7 +9,7 @@
         <result column="u_number" property="u_number"/>
         <result column="salt" property="salt"/>
         <result column="register_time" property="register_time" javaType="java.sql.Timestamp"/>
-        <result column="u_mail" property="u_mail" />
+        <result column="u_mail" property="u_mail"/>
         <result column="u_power" property="u_power"/>
     </resultMap>
 
@@ -23,8 +23,8 @@
 
     <!--插入用户-->
     <insert id="saveUser" parameterType="com.ctgu.pojo.User">
-        INSERT INTO user(uid, username, password, u_number,u_mail, salt, register_time, u_power) VALUES (#{uid}, #{username},
-        #{password}, #{u_number},#{u_mail}, #{salt}, #{register_time}, #{u_power})
+        INSERT INTO user(uid, username, password, u_number,u_mail, salt, u_power) VALUES (#{uid}, #{username},
+        #{password}, #{u_number},#{u_mail}, #{salt}, #{u_power})
     </insert>
 
     <!--更新密码-->

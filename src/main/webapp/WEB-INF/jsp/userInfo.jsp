@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -12,30 +11,34 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/layui/css/layui.css" media="all" />
-    <link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap.css"/>
     <script type="text/javascript" src="/layui/layui.js"></script>
-    <script type="text/javascript" src="/jquery/dist/jquery.js" ></script>
-    <script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.js" ></script>
+    <script type="text/javascript" src="/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <style>
         .layui-form-label {
             text-align: right;
             padding: 9px 0;
         }
-        .layui-form-item{
+
+        .layui-form-item {
             width: 360px;
             margin: 30px 10px;
             display: inline;
             float: left;
         }
+
         .layui-btn-normal {
             background-color: #009688;
         }
+
         .modal-body {
             height: 500px;
             overflow: hidden;
         }
-        .info-span{
+
+        .info-span {
             display: block;
             height: 36px;
             line-height: 36px;
@@ -71,7 +74,7 @@
         <tr>
             <td>
                 <div class="layui-form-item">
-                    <label  class="layui-form-label">姓名</label>
+                    <label class="layui-form-label">姓名</label>
                     <div class="layui-input-block">
                         <span class="info-span" name="s_name">${student.s_name}</span>
                     </div>
@@ -85,16 +88,17 @@
                     </div>
                 </div>
             </td>
-        </tr>
-        <tr>
             <td>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">专业</label>
+                    <label class="layui-form-label">班级</label>
                     <div class="layui-input-block">
-                        <span class="info-span" name="s_maj">${student.s_maj}</span>
+                        <span class="info-span" name="s_maj">${student.s_class}</span>
                     </div>
                 </div>
             </td>
+
+        </tr>
+        <tr>
             <td>
                 <div class="layui-form-item" pane="">
                     <label class="layui-form-label">性别</label>
@@ -103,8 +107,15 @@
                     </div>
                 </div>
             </td>
-        </tr>
-        <tr>
+            <td>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">专业</label>
+                    <div class="layui-input-block">
+                        <span class="info-span" name="s_maj">${student.s_maj}</span>
+                    </div>
+                </div>
+            </td>
+
             <td>
                 <div class="layui-form-item">
                     <label class="layui-form-label">生日</label>
@@ -113,6 +124,10 @@
                     </div>
                 </div>
             </td>
+        </tr>
+
+        <tr>
+
             <td>
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机</label>
@@ -121,8 +136,6 @@
                     </div>
                 </div>
             </td>
-        </tr>
-        <tr>
             <td>
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮箱</label>
@@ -140,6 +153,7 @@
                 </div>
             </td>
         </tr>
+
         <tr>
             <td>
                 <c:if test="${user.u_power != 4}">
@@ -169,7 +183,7 @@
     <input type="file" name="dddd" class="layui-upload-file" lay-title="掐指一算，我要换一个头像了">
     <img src="" class="layui-circle" id="userFace">
 </div>-->
-<div class="layui-form-item" style="margin-left: 5%;">
+<div class="layui-form-item" style="margin-left: 35%;">
     <div class="layui-input-block">
         <a class="layui-btn layui-btn-normal change-btn" data-toggle="modal" data-target="#myModal">立即修改</a>
     </div>
@@ -213,6 +227,13 @@
                                 <div class="layui-input-block">
                                     <input type="text" disabled class="layui-input disabled" name="s_num" id="s_num"
                                            value="${user.u_number}"/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="s_maj" class="layui-form-label">班级</label>
+                                <div class="layui-input-block">
+                                    <input type="text" class="layui-input" name="s_maj" id="s_class"
+                                           value="${student.s_class}"/>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -318,82 +339,58 @@
     $(function () {
 
         $("#update-submit").on("click", function () {
+
             var sid = $('#sid').val();
-            var s_name = $('#s_name').val();
-            var s_num = $('#s_num').val();
-            var s_sex = $('input:radio:checked').val();
-            var s_acd = $('#s_acd').val();
-            var s_maj = $('#s_maj').val();
-            var d_name = $('#d_name').val();
-            var p_name = $('#p_name').val();
-            var s_birth = $('#s_birth').val();
-            var s_tel = $('#s_tel').val();
-            var s_mail = $('#s_mail').val();
-            var s_qq = $('#s_qq').val();
-            var s_power = $('#s_power').val();
-            var join_time = $('#join_time').val();
+
+            var user = {
+                s_class: $('#s_class').val(),
+                s_name: $('#s_name').val(),
+                s_num: $('#s_num').val(),
+                s_sex: $('input:radio:checked').val(),
+                s_acd: $('#s_acd').val(),
+                s_maj: $('#s_maj').val(),
+                d_name: $('#d_name').val(),
+                p_name: $('#p_name').val(),
+                s_birth: $('#s_birth').val(),
+                s_tel: $('#s_tel').val(),
+                s_mail: $('#s_mail').val(),
+                s_qq: $('#s_qq').val(),
+                s_power: $('#s_power').val(),
+                join_time: $('#join_time').val()
+
+            };
+
             if (sid != null && sid != "") {
-                // alert(sid + " " + s_name + " " + s_num + " " + s_sex + " " + s_acd + " "  + s_maj+ " " + d_name + " "+ p_name
-                //     + " " + s_birth + " " + s_tel + " " + s_mail + " " + s_qq + " " + s_power + " " + join_time)
                 /*更新学生信息*/
+                user.sid = sid;
+
                 $.ajax({
                     url: "/student/updateInfo",
-                    data: {
-                        'sid': sid,
-                        's_name': s_name,
-                        's_num': s_num,
-                        's_sex': s_sex,
-                        's_acd': s_acd,
-                        's_maj': s_maj,
-                        'd_name': d_name,
-                        'p_name': p_name,
-                        's_birth': s_birth,
-                        's_tel': s_tel,
-                        's_mail': s_mail,
-                        's_qq': s_qq,
-                        's_power': s_power,
-                        'join_time': join_time
-                    },
+                    data: JSON.stringify(user),
                     dataType: "json",
+                    contentType: 'application/json', //设置请求头信息
                     type: "post",
                     success: function (msg) {
                         if (msg) {
                             alert("更新成功");
                             window.location.href = "/user/userInfo";
-                        }
-                        else
+                        } else
                             alert("更新失败");
                     }
                 })
-            }
-            else {
+            } else {
                 /*保存用户信息*/
-                // alert(sid + " " + s_name + " " + s_num + " " + s_sex + " " + s_acd + " "  + s_maj+ " " + d_name + " "+ p_name
-                //     + " " + s_birth + " " + s_tel + " " + s_mail + " " + s_qq + " " + s_power + " " + join_time)
                 $.ajax({
                     url: "/student/saveStudent",
-                    data: {
-                        's_name': s_name,
-                        's_num': s_num,
-                        's_sex': s_sex,
-                        's_acd': s_acd,
-                        's_maj': s_maj,
-                        'd_name': d_name,
-                        'p_name': p_name,
-                        's_birth': s_birth,
-                        's_tel': s_tel,
-                        's_mail': s_mail,
-                        's_qq': s_qq,
-                        's_power': s_power
-                    },
+                    data: JSON.stringify(user),
                     dataType: "json",
                     type: "post",
+                    contentType: 'application/json',
                     success: function (msg) {
                         if (msg) {
-                            alert("保存成功");
+                            // alert("保存成功");
                             window.location.href = "/user/userInfo";
-                        }
-                        else
+                        } else
                             alert("保存失败");
                     }
                 })

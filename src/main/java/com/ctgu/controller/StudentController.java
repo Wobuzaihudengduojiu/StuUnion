@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -57,9 +59,9 @@ public class StudentController {
      */
     @RequestMapping("/saveStudent")
     @ResponseBody
-    public boolean saveStudent(Student student){
+    public boolean saveStudent(@RequestBody Student student){
         log.info("保存学生信息");
-        log.info(student);
+        log.info(student.toString());
         studentService.saveStudent(student);
         return true;
     }
@@ -71,7 +73,7 @@ public class StudentController {
      */
     @RequestMapping("/updateInfo")
     @ResponseBody
-    public boolean updateInfo(Student student){
+    public boolean updateInfo(@RequestBody Student student){
         log.info("更新学生信息");
         log.info(student);
         studentService.updateStudent(student);
@@ -149,11 +151,9 @@ public class StudentController {
         return studentList;
     }
 
-
     /**
      * 删除在职人员
      */
-
     @RequestMapping("/deletePeo")
     @ResponseBody
     public boolean deletePeo(Student student){

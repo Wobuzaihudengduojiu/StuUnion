@@ -4,20 +4,21 @@
 
     <resultMap id="StudentBaseMap" type="com.ctgu.pojo.Student">
         <id column="sid" property="sid"/>
-        <result column="s_name" property="s_name" />
-        <result column="s_num" property="s_num" />
-        <result column="password" property="password" />
-        <result column="s_sex" property="s_sex" />
-        <result column="s_acd" property="s_acd" />
-        <result column="s_maj" property="s_maj" />
-        <result column="d_name" property="d_name" />
-        <result column="p_name" property="p_name" />
+        <result column="s_name" property="s_name"/>
+        <result column="s_num" property="s_num"/>
+        <result column="password" property="password"/>
+        <result column="s_sex" property="s_sex"/>
+        <result column="s_acd" property="s_acd"/>
+        <result column="s_maj" property="s_maj"/>
+        <result column="d_name" property="d_name"/>
+        <result column="p_name" property="p_name"/>
         <result column="s_birth" property="s_birth"/>
-        <result column="s_tel" property="s_tel" />
+        <result column="s_tel" property="s_tel"/>
         <result column="s_mail" property="s_mail"/>
-        <result column="s_qq" property="s_qq" />
-        <result column="s_power" property="s_power" />
+        <result column="s_qq" property="s_qq"/>
+        <result column="s_power" property="s_power"/>
         <result column="join_time" property="join_time" javaType="java.sql.Timestamp"/>
+        <result column="s_class" property="s_class" jdbcType="VARCHAR"/>
     </resultMap>
     <!--查找所有用户信息-->
     <select id="getStudentList" resultMap="StudentBaseMap">
@@ -25,25 +26,46 @@
     </select>
 
     <!--保存用户-->
-    <insert id="saveStudent" parameterType="com.ctgu.pojo.Student" >
-        INSERT INTO student(sid, s_name, s_num, s_sex, s_acd, s_maj, d_name, p_name, s_birth
-        , s_tel, s_mail, s_qq, s_power, join_time) VALUES (#{sid}, #{s_name}, #{s_num}, #{s_sex},
-         #{s_acd}, #{s_maj}, #{d_name}, #{p_name}, #{s_birth}, #{s_tel}, #{s_mail}, #{s_qq}, #{s_power}
-         , #{join_time})
+    <insert id="saveStudent" parameterType="com.ctgu.pojo.Student">
+    insert into student (sid, s_name, s_num,
+      s_sex, s_acd, s_maj,
+      d_name, p_name, s_birth,
+      s_tel, s_mail, s_power,
+      join_time, s_qq, s_class
+      )
+    values (#{sid,jdbcType=INTEGER}, #{s_name,jdbcType=VARCHAR}, #{s_num,jdbcType=VARCHAR},
+      #{s_sex,jdbcType=VARCHAR}, #{s_acd,jdbcType=VARCHAR}, #{s_maj,jdbcType=VARCHAR},
+      #{d_name,jdbcType=VARCHAR}, #{p_name,jdbcType=VARCHAR}, #{s_birth,jdbcType=VARCHAR},
+      #{s_tel,jdbcType=VARCHAR}, #{s_mail,jdbcType=VARCHAR}, #{s_power,jdbcType=INTEGER},
+      #{join_time,jdbcType=TIMESTAMP}, #{s_qq,jdbcType=VARCHAR}, #{s_class,jdbcType=VARCHAR}
+      )
     </insert>
 
     <!--更新用户-->
     <update id="updateStudent" parameterType="com.ctgu.pojo.Student">
-        UPDATE student SET s_name = #{s_name}, s_sex = #{s_sex}, s_acd = #{s_acd}, s_maj=#{s_maj},
-        d_name=#{d_name},p_name=#{p_name}, s_birth=#{s_birth}, s_tel=#{s_tel}, s_mail=#{s_mail},
-        s_qq=${s_qq}, s_power=#{s_power}, join_time=#{join_time} WHERE sid = #{sid}
+    update student
+    set s_name = #{s_name,jdbcType=VARCHAR},
+      s_num = #{s_num,jdbcType=VARCHAR},
+      s_sex = #{s_sex,jdbcType=VARCHAR},
+      s_acd = #{s_acd,jdbcType=VARCHAR},
+      s_maj = #{s_maj,jdbcType=VARCHAR},
+      d_name = #{d_name,jdbcType=VARCHAR},
+      p_name = #{p_name,jdbcType=VARCHAR},
+      s_birth = #{s_birth,jdbcType=VARCHAR},
+      s_tel = #{s_tel,jdbcType=VARCHAR},
+      s_mail = #{s_mail,jdbcType=VARCHAR},
+      s_power = #{s_power,jdbcType=INTEGER},
+      join_time = #{join_time,jdbcType=TIMESTAMP},
+      s_qq = #{s_qq,jdbcType=VARCHAR},
+      s_class = #{s_class,jdbcType=VARCHAR}
+    where sid = #{sid,jdbcType=INTEGER}
     </update>
 
     <!--根据自身权限查看低权限用户的信息-->
     <select id="powerStudentList" parameterType="int">
         SELECT * FROM student WHERE s_power > #{s_power} ORDER BY s_power
     </select>
-    
+
     <!--根据学号查找信息-->
     <select id="studentInfo" parameterType="String" resultType="com.ctgu.pojo.Student">
         SELECT * FROM student WHERE s_num = #{s_num}

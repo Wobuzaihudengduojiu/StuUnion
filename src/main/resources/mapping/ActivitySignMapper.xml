@@ -17,8 +17,8 @@
 
     <insert id="saveActivitySign" parameterType="com.ctgu.pojo.ActivitySign">
         INSERT INTO activity_sign(as_id, a_name, s_name, s_num, s_sex, s_acd, s_class
-        , s_tel, s_mail, as_time) VALUES (#{as_id}, #{a_name}, #{s_name}, #{s_num}, #{s_sex}, #{s_acd},
-        #{s_class}, #{s_tel}, #{s_mail}, #{as_time})
+        , s_tel, s_mail) VALUES (#{as_id}, #{a_name}, #{s_name}, #{s_num}, #{s_sex}, #{s_acd},
+        #{s_class}, #{s_tel}, #{s_mail})
     </insert>
 
     <select id="gerActivitySignList" parameterType="String" resultMap="ActivitySignBaseMap">

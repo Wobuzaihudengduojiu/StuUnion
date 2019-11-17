@@ -8,6 +8,17 @@ import java.util.List;
 
 @Repository
 public interface StudentDao {
+
+    int deleteByPrimaryKey(Integer sid);
+
+    int insert(Student record);
+
+    Student selectByPrimaryKey(Integer sid);
+
+    List<Student> selectAll();
+
+    int updateByPrimaryKey(Student record);
+
     //获取所有用户信息
     List<Student> getStudentList();
 

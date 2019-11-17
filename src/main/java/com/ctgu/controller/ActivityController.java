@@ -33,7 +33,6 @@ public class ActivityController {
     @Autowired
     private StudentService studentService;
 
-
     @RequestMapping("/manage")
     public String manageIndex(){
         return "activity_manage";
