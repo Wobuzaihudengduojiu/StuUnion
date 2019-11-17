@@ -4,6 +4,8 @@ public class Constant {
 
 
     public static final Integer SUCCESS_CODE=200;
+
+
     public static final String SUCCESS_MSG = "请求成功";
 
     /**
@@ -21,13 +23,9 @@ public class Constant {
      */
     public static final String UPLOAD_PATH="\\excel\\";
 
-
     /**
      * 导出excel路径
      */
     public static final String EXPORT_PATH="C:\\Users\\S\\Desktop\\excel";
-
-
-
 
 }
