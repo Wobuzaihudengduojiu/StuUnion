@@ -61,6 +61,8 @@
         <property name="maxInMemorySize" value="4096"/>
     </bean>
 
+    <!--<bean id="GlobleExceptionHandler" class="com.ctgu.handler.GlobleExceptionHandler"></bean>-->
+
     <!--拦截器-->
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
@@ -69,6 +71,5 @@
             <!--<bean class="com.ctgu.filter.LoginInterceptor"/>-->
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
-
 
 </beans>

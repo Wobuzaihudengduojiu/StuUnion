@@ -201,7 +201,7 @@
                 <div>
                     <div class="layui-upload">
                         <div class="site-demo-upbar">
-                            <input type="file" name="file" class="layui-upload-file" id="test">
+                            <input type="file" name="file"  class="layui-upload-file">
                         </div>
                         <%--<button type="button" class="layui-btn layui-btn-normal" id="test">选择文件</button>--%>
                         <%--<button type="button" class="layui-btn" id="btn-excel-sure">开始上传</button>--%>
@@ -248,18 +248,10 @@
 <script>
     layui.use('upload', function(){
         layui.upload({
-            url: '' //上传接口
+            url: '/grade/upload' //上传接口
+            ,ext:'xlsx|xls'
             ,success: function(res){ //上传成功后的回调
                 console.log(res)
-            }
-        });
-
-        layui.upload({
-            url: '/test/upload.json'
-            ,elem: '#test' //指定原始元素，默认直接查找class="layui-upload-file"
-            ,method: 'get' //上传接口的http类型
-            ,success: function(res){
-                LAY_demo_upload.src = res.url;
             }
         });
     });

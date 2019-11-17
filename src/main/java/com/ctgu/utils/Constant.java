@@ -16,4 +16,18 @@ public class Constant {
     public static final String DETAULT_PASSWORD="123456";
 
 
+    /**
+     * 上传路径
+     */
+    public static final String UPLOAD_PATH="\\excel\\";
+
+
+    /**
+     * 导出excel路径
+     */
+    public static final String EXPORT_PATH="C:\\Users\\S\\Desktop\\excel";
+
+
+
+
 }

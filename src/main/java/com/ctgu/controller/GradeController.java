@@ -4,22 +4,31 @@ import com.ctgu.pojo.Activity;
 import com.ctgu.pojo.Grade;
 import com.ctgu.pojo.Student;
 import com.ctgu.pojo.User;
+import com.ctgu.pojo.param.ResultVO;
 import com.ctgu.service.ActivityService;
 import com.ctgu.service.GradeService;
 import com.ctgu.service.StudentService;
+import com.ctgu.utils.Constant;
+import com.ctgu.utils.ResultVoUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -42,12 +51,13 @@ public class GradeController {
 
     /**
      * 查找参加该活动的所有人员
+     *
      * @param a_id
      * @return
      */
     @RequestMapping("/getAllGradeListById")
     @ResponseBody
-    public String getAllGradeListById(@RequestParam("a_id") String a_id){
+    public String getAllGradeListById(@RequestParam("a_id") String a_id) {
         log.info("查找参加该活动的所有人员");
         Activity activity = activityService.getActivity(Integer.valueOf(a_id));
         List<Grade> list = gradeService.getAllGradeListByName(activity.getA_name());
@@ -59,8 +69,8 @@ public class GradeController {
      * 申请某项活动加分页面
      */
     @RequestMapping("/applicationPage")
-    public ModelAndView applicationPage(HttpSession session){
-        User user = (User)session.getAttribute("user");
+    public ModelAndView applicationPage(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         Student student = studentService.studentInfo(user.getU_number());
         ModelAndView mv = new ModelAndView();
         mv.addObject("student", student);
@@ -71,12 +81,13 @@ public class GradeController {
 
     /**
      * 加分申请保存
+     *
      * @param grade
      * @return
      */
     @RequestMapping("/saveGrade")
     @ResponseBody
-    public boolean saveGrade(Grade grade){
+    public boolean saveGrade(Grade grade) {
         log.info("加分申请" + grade);
         gradeService.saveGrade(grade);
         return true;
@@ -85,19 +96,20 @@ public class GradeController {
 
     /*加分记录页面*/
     @RequestMapping("/grade_recordPage")
-    public String recordPage(){
+    public String recordPage() {
         return "grade_record";
     }
 
     /**
      * 通过学号查找已加分的活动
+     *
      * @param session
      * @return
      */
     @RequestMapping("/getGradeByNum")
     @ResponseBody
-    public String getGradeByNum(HttpSession session){
-        User user = (User)session.getAttribute("user");
+    public String getGradeByNum(HttpSession session) {
+        User user = (User) session.getAttribute("user");
         log.info("查找学号为" + user.getU_number() + "参加过的活动");
         List<Grade> list = gradeService.getGradeByNum(user.getU_number());
         String gradeList = gson.toJson(list);
@@ -106,29 +118,31 @@ public class GradeController {
 
     /**
      * 签到页面
+     *
      * @param a_name
      * @param req
      * @return
      */
     @RequestMapping("/SignInPage")
-    public String signInPage(@RequestParam("a_name") String a_name, HttpServletRequest req){
+    public String signInPage(@RequestParam("a_name") String a_name, HttpServletRequest req) {
         req.getSession().setAttribute("a_name", a_name);
         return "attendance";
     }
 
     /*加分审批页面*/
     @RequestMapping("/grade_manage")
-    public String gradeManagePage(){
+    public String gradeManagePage() {
         return "grade_manage";
     }
 
     /**
      * 按时间获取所有加分申请
+     *
      * @return
      */
     @RequestMapping("/getAllGrade")
     @ResponseBody
-    public String getAllGrade(){
+    public String getAllGrade() {
         log.info("按时间获取所有加分申请");
         List<Grade> list = gradeService.getAllGrade();
         String allGrade = gson.toJson(list);
@@ -137,12 +151,13 @@ public class GradeController {
 
     /**
      * 根据ID查找加分明细
+     *
      * @param g_id
      * @return
      */
     @RequestMapping("/getGrade")
     @ResponseBody
-    public String getGrade(@RequestParam("g_id") String g_id){
+    public String getGrade(@RequestParam("g_id") String g_id) {
         log.info("查找id为" + g_id + "的加分明细");
         Grade grade = gradeService.getGrade(Integer.valueOf(g_id));
         String gradeStr = gson.toJson(grade);
@@ -151,6 +166,7 @@ public class GradeController {
 
     /**
      * 根据a_id更新活动状态
+     *
      * @param g_id
      * @param g_status
      * @return
@@ -158,7 +174,7 @@ public class GradeController {
     @RequestMapping("/updateStatus")
     @ResponseBody
     public boolean updateStatus(@RequestParam("g_id") String g_id,
-                                @RequestParam("g_status") String g_status){
+                                @RequestParam("g_status") String g_status) {
         log.info("将id为" + g_id + "的状态更新为" + g_status);
         gradeService.updateStatus(Integer.valueOf(g_id), g_status);
         return true;
@@ -169,9 +185,9 @@ public class GradeController {
      */
     @RequestMapping("/getAllPrize")
     @ResponseBody
-    public String getAllPrize(HttpSession session){
+    public String getAllPrize(HttpSession session) {
         log.info("各类分数总结");
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         Double gra_sign = gradeService.getGradeSign(user.getU_number());
         Double gra_join = gradeService.getGradeJoin(user.getU_number());
         Double gra_ora = gradeService.getGradeOrg(user.getU_number());
@@ -191,6 +207,7 @@ public class GradeController {
 
     /**
      * 根据加分类别查找
+     *
      * @param g_class
      * @param session
      * @return
@@ -198,12 +215,38 @@ public class GradeController {
     @RequestMapping("/getGradeByClass")
     @ResponseBody
     public String getGradeByClass(@RequestParam("g_class") String g_class,
-                                  HttpSession session){
+                                  HttpSession session) {
         log.info("查找" + g_class + "的加分详情");
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         List<Grade> list = gradeService.getGradeByClass(g_class, user.getU_number());
         Gson gson = new Gson();
         String gradeList = gson.toJson(list);
         return gradeList;
+    }
+
+
+    @RequestMapping("/upload")
+    @ResponseBody
+    public ResultVO importExcel(HttpServletRequest request,
+                                @RequestParam("file") MultipartFile file) throws IOException {
+
+        File directory = new File(".");
+        String path = directory.getCanonicalPath() + Constant.UPLOAD_PATH;
+
+        //上传文件名
+        String filename = file.getOriginalFilename();
+
+        // 判断存放上传文件的目录是否存在（不存在则创建）
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        log.info("path=" + path);
+
+        //将上传文件保存到一个目标文件当中
+        file.transferTo(new File(path + File.separator + filename));
+
+        return ResultVoUtil.success();
+
     }
 }

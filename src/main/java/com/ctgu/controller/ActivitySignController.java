@@ -2,10 +2,12 @@ package com.ctgu.controller;
 
 import com.ctgu.pojo.Activity;
 import com.ctgu.pojo.ActivitySign;
+import com.ctgu.pojo.param.ErrorEnum;
 import com.ctgu.pojo.param.ResultVO;
 import com.ctgu.pojo.param.SignExcel;
 import com.ctgu.service.ActivityService;
 import com.ctgu.service.ActivitySignService;
+import com.ctgu.utils.Constant;
 import com.ctgu.utils.ResultVoUtil;
 import com.google.gson.Gson;
 import com.sargeraswang.util.ExcelUtil.ExcelUtil;
@@ -70,59 +72,11 @@ public class ActivitySignController {
     @ResponseBody
     public ResultVO exportExcel(@RequestParam("a_id") String a_id) {
 
-        Activity activity = activityService.getActivity(Integer.valueOf(a_id));
-        log.info("获取 " + activity.getA_name() + " 的报名信息");
+        if(activitySignService.exportExcel(a_id)){
 
-        List<SignExcel> data =
-                activitySignService.gerActivitySignList(activity.getA_name())
-                        .stream()
-                        .map(
-                                v -> {
-                                    SignExcel signExcel = new SignExcel();
-
-                                    signExcel.setS_acd(v.getS_acd());
-                                    signExcel.setS_class(v.getS_class());
-                                    signExcel.setS_name(v.getS_name());
-                                    signExcel.setS_num(v.getS_num());
-
-                                    return signExcel;
-                                }
-                        )
-                        .collect(Collectors.toList());
-
-
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("s_name", "姓名");
-        map.put("s_num", "学号");
-        map.put("s_class", "班级");
-        map.put("s_acd", "专业");
-
-        String PATH = "C:\\Users\\S\\Desktop\\excel";
-
-        File file = new File(PATH);
-
-        if(!file.exists()){
-            file.mkdir();
+            return new ResultVoUtil().success();
+        }else{
+            return new ResultVoUtil().error(ErrorEnum.E_90003);
         }
-
-        File file1 = new File(PATH,activity.getA_name()+".xls");
-
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(file1);
-            log.info("打印excel");
-            ExcelUtil.exportExcel(map, data, out);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return new ResultVoUtil().success();
     }
-
 }
