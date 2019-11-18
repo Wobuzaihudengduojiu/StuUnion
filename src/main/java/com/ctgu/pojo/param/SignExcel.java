@@ -11,16 +11,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SignExcel {
 
+
     @ExcelCell(index = 0)
-    private String s_name;
+    private String a_name;
 
     @ExcelCell(index = 1)
+    private String s_name;
+
+    @ExcelCell(index = 2)
     private String s_num;
 
-    @ExcelCell(index=2)
+    @ExcelCell(index = 3)
     private String s_class;
 
-    @ExcelCell(index=3)
+    @ExcelCell(index = 4)
     private String s_acd;
+
+    @ExcelCell(index = 5)
+    private String score;
 
 }

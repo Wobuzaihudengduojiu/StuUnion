@@ -1,6 +1,7 @@
 package com.ctgu.service;
 
 import com.ctgu.pojo.Grade;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,4 +46,14 @@ public interface GradeService {
 
     /*根据加分类别查找*/
     List<Grade> getGradeByClass(String g_class, String s_num);
+
+    /**
+     * 导入Excel文件
+     */
+    Boolean importExcel(MultipartFile file);
+
+
+
+
+
 }

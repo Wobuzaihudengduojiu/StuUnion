@@ -17,6 +17,7 @@ import java.io.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +46,8 @@ public class ActivitySignServiceImpl implements ActivitySignService {
     @Override
     public Boolean exportExcel(String a_id) {
         Activity activity = activityService.getActivity(Integer.valueOf(a_id));
+
+        String a_name=activity.getA_name();
         log.info("获取 " + activity.getA_name() + " 的报名信息");
 
         List<SignExcel> data =
@@ -54,10 +57,12 @@ public class ActivitySignServiceImpl implements ActivitySignService {
                                 v -> {
                                     SignExcel signExcel = new SignExcel();
 
+                                    signExcel.setA_name(a_name);
                                     signExcel.setS_acd(v.getS_acd());
                                     signExcel.setS_class(v.getS_class());
                                     signExcel.setS_name(v.getS_name());
                                     signExcel.setS_num(v.getS_num());
+                                    signExcel.setScore(null);
 
                                     return signExcel;
                                 }
@@ -66,10 +71,12 @@ public class ActivitySignServiceImpl implements ActivitySignService {
 
 
         Map<String, String> map = new LinkedHashMap<>();
+        map.put("a_name","活动名称");
         map.put("s_name", "姓名");
         map.put("s_num", "学号");
         map.put("s_class", "班级");
         map.put("s_acd", "专业");
+        map.put("score","加分类型");
 
         File file = new File(Constant.EXPORT_PATH);
 
@@ -88,7 +95,7 @@ public class ActivitySignServiceImpl implements ActivitySignService {
             e.printStackTrace();
         } finally {
             try {
-                out.close();
+                Objects.requireNonNull(out).close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

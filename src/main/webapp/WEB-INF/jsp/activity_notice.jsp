@@ -432,9 +432,7 @@
             success: function (res) {
 
                 if (res.code === 200) {
-                    alert("打印完成");
-                } else {
-                    alert("打印失败,请重试");
+                    layer.msg("导出Excel成功");
                 }
             }
         });

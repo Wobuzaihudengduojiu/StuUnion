@@ -187,7 +187,6 @@
             font-size: 20px;
             font-weight: bold;
             color: #9999;
-
         }
     </style>
 </head>
@@ -198,17 +197,17 @@
             <div class="layui-inline selectMsg"></div>
             <div class="layui-inline">
                 <div class="layui-form-mid layui-word-aux">申请列表</div>
-                <div>
-                    <div class="layui-upload">
-                        <div class="site-demo-upbar">
-                            <input type="file" name="file"  class="layui-upload-file">
-                        </div>
-                        <%--<button type="button" class="layui-btn layui-btn-normal" id="test">选择文件</button>--%>
-                        <%--<button type="button" class="layui-btn" id="btn-excel-sure">开始上传</button>--%>
-                    </div>
+                <div class="layui-upload">
+                    <input type="file" name="file1"  lay-type="file" class="layui-upload-file">
+                    <%--<button type="button" class="layui-btn layui-btn-normal" id="test">选择文件</button>--%>
+                    <%--<button type="button" class="layui-btn" id="btn-excel-sure">开始上传</button>--%>
                 </div>
             </div>
+
         </blockquote>
+
+
+
         <table class="layui-table">
             <colgroup>
                 <col width="20%">
@@ -233,6 +232,7 @@
         </table>
     </form>
 </div>
+
 <div class="activity_describe">
     <div class="activity_header">
         <div class="clear"></div>
@@ -246,12 +246,16 @@
 
 <script src="layui/layui.js"></script>
 <script>
-    layui.use('upload', function(){
+    layui.use('upload', function () {
         layui.upload({
             url: '/grade/upload' //上传接口
-            ,ext:'xlsx|xls'
-            ,success: function(res){ //上传成功后的回调
-                console.log(res)
+            , ext: 'xlsx|xls'
+            , success: function (res) { //上传成功后的回调
+
+                if(res.code===200){
+                    layer.msg("数据导入成功");
+                }
+                window.location.reload();
             }
         });
     });
@@ -370,7 +374,6 @@
         });
     }
 </script>
-
 
 
 </body>

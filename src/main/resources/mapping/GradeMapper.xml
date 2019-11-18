@@ -15,12 +15,21 @@
         <result column="g_decide_name" property="g_decide_name"/>
         <result column="g_prove" property="g_prove"/>
     </resultMap>
-    
+
     <insert id="saveGrade" parameterType="com.ctgu.pojo.Grade">
         INSERT INTO grade(g_id, a_name, g_class, g_value, s_num, s_name, s_class, g_time, g_status, g_decide_name, g_prove)
         VALUES (#{g_id}, #{a_name}, #{g_class}, #{g_value}, #{s_num}, #{s_name}, #{s_class}, #{g_time}, #{g_status}
         , #{g_decide_name}, #{g_prove})
     </insert>
+
+    <insert id="insertExcel" parameterType="java.util.List">
+        insert into grade(g_id,a_name, g_class, g_value, s_num, s_name, s_class)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.g_id},#{item.a_name},#{item.g_class},#{item.g_value},#{item.s_num},#{item.s_name},#{item.s_class})
+        </foreach>
+    </insert>
+
 
     <!--根据学号查找该用户参加过的活动-->
     <select id="getGradeByNum" parameterType="String" resultMap="GradeBaseMap">
@@ -46,7 +55,7 @@
     <update id="updateStatus">
         UPDATE grade SET g_status = #{1} WHERE g_id = #{0}
     </update>
-    
+
     <!--获取用户签到总分-->
     <select id="getGradeSign" parameterType="String" resultType="Double">
         select sum(g_value) from grade where g_class = '签到'and g_status = 1 and  s_num = #{s_num} GROUP BY NULL;

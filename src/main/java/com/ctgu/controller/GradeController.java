@@ -4,11 +4,11 @@ import com.ctgu.pojo.Activity;
 import com.ctgu.pojo.Grade;
 import com.ctgu.pojo.Student;
 import com.ctgu.pojo.User;
+import com.ctgu.pojo.param.ErrorEnum;
 import com.ctgu.pojo.param.ResultVO;
 import com.ctgu.service.ActivityService;
 import com.ctgu.service.GradeService;
 import com.ctgu.service.StudentService;
-import com.ctgu.utils.Constant;
 import com.ctgu.utils.ResultVoUtil;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,16 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -46,6 +40,7 @@ public class GradeController {
 
     @Autowired
     private StudentService studentService;
+
 
     Gson gson = new Gson();
 
@@ -207,7 +202,6 @@ public class GradeController {
 
     /**
      * 根据加分类别查找
-     *
      * @param g_class
      * @param session
      * @return
@@ -227,26 +221,13 @@ public class GradeController {
 
     @RequestMapping("/upload")
     @ResponseBody
-    public ResultVO importExcel(HttpServletRequest request,
-                                @RequestParam("file") MultipartFile file) throws IOException {
+    public ResultVO importExcel(
+            @RequestParam(value="file1") MultipartFile file) {
 
-        File directory = new File(".");
-        String path = directory.getCanonicalPath() + Constant.UPLOAD_PATH;
-
-        //上传文件名
-        String filename = file.getOriginalFilename();
-
-        // 判断存放上传文件的目录是否存在（不存在则创建）
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdir();
+        if (gradeService.importExcel(file)) {
+            return ResultVoUtil.success();
+        } else {
+            return ResultVoUtil.error(ErrorEnum.E_400);
         }
-        log.info("path=" + path);
-
-        //将上传文件保存到一个目标文件当中
-        file.transferTo(new File(path + File.separator + filename));
-
-        return ResultVoUtil.success();
-
     }
 }

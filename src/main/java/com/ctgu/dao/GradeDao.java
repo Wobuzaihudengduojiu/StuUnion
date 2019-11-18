@@ -44,4 +44,11 @@ public interface GradeDao {
 
     /*根据加分类别查找*/
     List<Grade> getGradeByClass(String g_class, String s_num);
+
+    /**
+     * 批量插入
+     */
+    int insertExcel(List<Grade> list);
+
+
 }
